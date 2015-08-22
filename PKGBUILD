@@ -4,8 +4,8 @@
 
 pkgbase=linux
 _srcname=linux-bcache
-pkgver=4.1.r159862.g3ff6368
-_basever=4.1
+pkgver=4.1.0.r159862.g3ff6368
+_basever=4.1.0
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
