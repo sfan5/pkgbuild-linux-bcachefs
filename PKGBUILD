@@ -2,31 +2,32 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
-pkgbase=linux-git
-_srcname=linux
-pkgver=4.2rc1.r62.gc4b5fd3
+pkgbase=linux
+_srcname=linux-bcache
+pkgver=4.1.r159862.g3ff6368
+_basever=4.1
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
 options=('!strip')
-source=('git+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git'
+source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-dev'
         # the main kernel config files
         'config' 'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         "${pkgbase}.preset")
 sha256sums=('SKIP'
             'f4c6a5c2fc0ee2b792e43f4c1846b995051901a502fb97885d2296af55fa193d'
-            'd5ed43ed651219d246816bcf3523204ce2fd5f32525d74d61f70ce237ea64fe4'
-            '95fcfdfcb9d540d1a1428ce61e493ddf2c2a8ec96c8573deeadbb4ee407508c7')
+            '0f29b0714952f227aed7558a4da016b2338653799acc066a417c536f26bacdb7'
+            '75d7d4b94156b3ba705a72ebbb91e84c8d519acf1faec852a74ade2accc7b0ea')
 
 _kernelname=${pkgbase#linux}
 
 pkgver() {
   cd "${_srcname}"
 
-  git describe --long | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/'
+  git describe --long | sed -E 's/^origin/'${_basever}'/;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/'
 }
 
 prepare() {
@@ -38,8 +39,8 @@ prepare() {
     cat "${srcdir}/config" > ./.config
   fi
 
-  # set localversion to git commit
-  sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"-${pkgver##*.}\"|g" ./.config
+  # set custom localversion
+  sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"-bcachefs\"|g" ./.config
   sed -i "s|CONFIG_LOCALVERSION_AUTO=.*|CONFIG_LOCALVERSION_AUTO=n|" ./.config
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
@@ -67,7 +68,7 @@ build() {
 }
 
 _package() {
-  pkgdesc="The Linux kernel and modules (git version)"
+  pkgdesc="The Linux kernel and modules (with bcachefs support)"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=("kernel26${_kernelname}=${pkgver}")
@@ -128,7 +129,7 @@ _package() {
 }
 
 _package-headers() {
-  pkgdesc="Header files and scripts for building modules for Linux kernel (git version)"
+  pkgdesc="Header files and scripts for building modules for Linux kernel (with bcachefs support)"
   provides=("kernel26${_kernelname}-headers=${pkgver}")
   conflicts=("kernel26${_kernelname}-headers")
   replaces=("kernel26${_kernelname}-headers")
@@ -248,7 +249,7 @@ _package-headers() {
 }
 
 _package-docs() {
-  pkgdesc="Kernel hackers manual - HTML documentation that comes with the Linux kernel (git version)"
+  pkgdesc="Kernel hackers manual - HTML documentation that comes with the Linux kernel (with bcachefs support)"
   provides=("kernel26${_kernelname}-docs=${pkgver}")
   conflicts=("kernel26${_kernelname}-docs")
   replaces=("kernel26${_kernelname}-docs")
