@@ -1,8 +1,7 @@
-pkgbase = linux-git
-	pkgver = 4.2rc1.r62.gc4b5fd3
+pkgbase = linux
+	pkgver = 4.7.r243513.gac296bd
 	pkgrel = 1
 	url = http://www.kernel.org/
-	arch = i686
 	arch = x86_64
 	license = GPL2
 	makedepends = xmlto
@@ -11,38 +10,32 @@ pkgbase = linux-git
 	makedepends = inetutils
 	makedepends = bc
 	makedepends = git
+	makedepends = libelf
 	options = !strip
-	source = git+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-	source = config
+	backup = etc/mkinitcpio.d/linux-git.preset
+	source = git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-encryption
 	source = config.x86_64
-	source = linux-git.preset
+	source = linux.preset
 	sha256sums = SKIP
-	sha256sums = f4c6a5c2fc0ee2b792e43f4c1846b995051901a502fb97885d2296af55fa193d
-	sha256sums = d5ed43ed651219d246816bcf3523204ce2fd5f32525d74d61f70ce237ea64fe4
-	sha256sums = df801f0d66d545908950cc26d75b22f93c7a132ebd0890c85d1ce52a9cd93556
+	sha256sums = 1db804bd8ded83e8cbf399e40c251ff3d19a48c423f6f531ff03e988df67ca35
+	sha256sums = 75d7d4b94156b3ba705a72ebbb91e84c8d519acf1faec852a74ade2accc7b0ea
 
-pkgname = linux-git
-	pkgdesc = The Linux kernel and modules (git version)
+pkgname = linux
+	pkgdesc = The Linux kernel and modules (with bcachefs support)
 	install = linux.install
 	depends = coreutils
 	depends = linux-firmware
 	depends = kmod
 	depends = mkinitcpio>=0.7
 	optdepends = crda: to set the correct wireless channels of your country
-	provides = kernel26-git=4.2rc1.r62.gc4b5fd3
-	conflicts = kernel26-git
-	replaces = kernel26-git
-	backup = etc/mkinitcpio.d/linux-git.preset
+	provides = linux
+	backup = etc/mkinitcpio.d/linux.preset
 
-pkgname = linux-git-headers
-	pkgdesc = Header files and scripts for building modules for Linux kernel (git version)
-	provides = kernel26-git-headers=4.2rc1.r62.gc4b5fd3
-	conflicts = kernel26-git-headers
-	replaces = kernel26-git-headers
+pkgname = linux-headers
+	pkgdesc = Header files and scripts for building modules for Linux kernel (with bcachefs support)
+	provides = linux-headers
 
-pkgname = linux-git-docs
-	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux kernel (git version)
-	provides = kernel26-git-docs=4.2rc1.r62.gc4b5fd3
-	conflicts = kernel26-git-docs
-	replaces = kernel26-git-docs
+pkgname = linux-docs
+	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux kernel (with bcachefs support)
+	provides = linux-docs
 

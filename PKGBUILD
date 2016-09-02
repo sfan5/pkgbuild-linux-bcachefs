@@ -1,25 +1,28 @@
 # Maintainer: Boohbah <boohbah at gmail.com>
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 # Contributor: Thomas Baechler <thomas@archlinux.org>
+# Contributor: Jonathan Chan <jyc@fastmail.fm>
+# Contributor: misc <tastky@gmail.com>
+# Contributor: NextHendrix <cjones12 at sheffield.ac.uk>
 
 pkgbase=linux
 _srcname=linux-bcache
-pkgver=4.1.0.r159862.g3ff6368
-_basever=4.1.0
+pkgver=4.7.r243513.gac296bd
+_basever=4.7
 pkgrel=1
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'libelf')
+backup=('etc/mkinitcpio.d/linux-git.preset')
 options=('!strip')
-source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-dev'
+source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-encryption'
         # the main kernel config files
-        'config' 'config.x86_64'
+        'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         "${pkgbase}.preset")
 sha256sums=('SKIP'
-            'f4c6a5c2fc0ee2b792e43f4c1846b995051901a502fb97885d2296af55fa193d'
-            '0f29b0714952f227aed7558a4da016b2338653799acc066a417c536f26bacdb7'
+            '1db804bd8ded83e8cbf399e40c251ff3d19a48c423f6f531ff03e988df67ca35'
             '75d7d4b94156b3ba705a72ebbb91e84c8d519acf1faec852a74ade2accc7b0ea')
 
 _kernelname=${pkgbase#linux}
@@ -33,11 +36,7 @@ pkgver() {
 prepare() {
   cd "${_srcname}"
 
-  if [ "${CARCH}" = "x86_64" ]; then
-    cat "${srcdir}/config.x86_64" > ./.config
-  else
-    cat "${srcdir}/config" > ./.config
-  fi
+  cat "${srcdir}/config.x86_64" > ./.config
 
   # set custom localversion
   sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"-bcachefs\"|g" ./.config
@@ -71,9 +70,7 @@ _package() {
   pkgdesc="The Linux kernel and modules (with bcachefs support)"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=("kernel26${_kernelname}=${pkgver}")
-  conflicts=("kernel26${_kernelname}")
-  replaces=("kernel26${_kernelname}")
+  provides=('linux')
   backup=("etc/mkinitcpio.d/${pkgbase}.preset")
   install=linux.install
 
@@ -126,13 +123,14 @@ _package() {
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux" 
+
+  # add System.map
+  install -D -m644 System.map "${pkgdir}/boot/System.map-${_kernver}"
 }
 
 _package-headers() {
   pkgdesc="Header files and scripts for building modules for Linux kernel (with bcachefs support)"
-  provides=("kernel26${_kernelname}-headers=${pkgver}")
-  conflicts=("kernel26${_kernelname}-headers")
-  replaces=("kernel26${_kernelname}-headers")
+  provides=('linux-headers')
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
@@ -166,10 +164,6 @@ _package-headers() {
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel"
 
   cp arch/${KARCH}/Makefile "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/"
-
-  if [ "${CARCH}" = "i686" ]; then
-    cp arch/${KARCH}/Makefile_32.cpu "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/"
-  fi
 
   cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel/"
 
@@ -229,6 +223,13 @@ _package-headers() {
     cp ${i} "${pkgdir}/usr/lib/modules/${_kernver}/build/${i}"
   done
 
+  # Fix file conflict with -doc package
+  rm "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild"/Kconfig.*-*
+
+  # Add objtool for CONFIG_STACK_VALIDATION
+  mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/tools"
+  cp -a tools/objtool "${pkgdir}/usr/lib/modules/${_kernver}/build/tools"
+
   chown -R root.root "${pkgdir}/usr/lib/modules/${_kernver}/build"
   find "${pkgdir}/usr/lib/modules/${_kernver}/build" -type d -exec chmod 755 {} \;
 
@@ -250,9 +251,7 @@ _package-headers() {
 
 _package-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the Linux kernel (with bcachefs support)"
-  provides=("kernel26${_kernelname}-docs=${pkgver}")
-  conflicts=("kernel26${_kernelname}-docs")
-  replaces=("kernel26${_kernelname}-docs")
+  provides=('linux-docs')
 
   cd "${_srcname}"
 
