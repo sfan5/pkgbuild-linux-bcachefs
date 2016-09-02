@@ -14,7 +14,7 @@ arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'libelf')
-backup=('etc/mkinitcpio.d/linux-git.preset')
+backup=('etc/mkinitcpio.d/linux.preset')
 options=('!strip')
 source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-encryption'
         # the main kernel config files
