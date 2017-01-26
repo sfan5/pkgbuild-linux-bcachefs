@@ -5,25 +5,24 @@
 # Contributor: misc <tastky@gmail.com>
 # Contributor: NextHendrix <cjones12 at sheffield.ac.uk>
 
-pkgbase=linux
+pkgbase=linux-bcachefs
 _srcname=linux-bcache
-pkgver=4.7.r243513.gac296bd
-_basever=4.7
+pkgver=4.8.r258261.g6bdfadd4c37f
+_basever=4.8
 pkgrel=1
 arch=('x86_64')
-url="http://www.kernel.org/"
+url="https://evilpiepirate.org/git/linux-bcache.git/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'libelf')
-backup=('etc/mkinitcpio.d/linux.preset')
 options=('!strip')
-source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-encryption'
+source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-dev'
         # the main kernel config files
         'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         "${pkgbase}.preset")
 sha256sums=('SKIP'
-            '1db804bd8ded83e8cbf399e40c251ff3d19a48c423f6f531ff03e988df67ca35'
-            '75d7d4b94156b3ba705a72ebbb91e84c8d519acf1faec852a74ade2accc7b0ea')
+            '5da24b534ba44a0f6bbc807af41dfd4af2a23e6c599d6c19a583da5f8e878448'
+            '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729')
 
 _kernelname=${pkgbase#linux}
 

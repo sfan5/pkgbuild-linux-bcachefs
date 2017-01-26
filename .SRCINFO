@@ -1,7 +1,7 @@
-pkgbase = linux
-	pkgver = 4.7.r243513.gac296bd
+pkgbase = linux-bcachefs
+	pkgver = 4.8.r258261.g6bdfadd4c37f
 	pkgrel = 1
-	url = http://www.kernel.org/
+	url = https://evilpiepirate.org/git/linux-bcache.git/
 	arch = x86_64
 	license = GPL2
 	makedepends = xmlto
@@ -12,15 +12,15 @@ pkgbase = linux
 	makedepends = git
 	makedepends = libelf
 	options = !strip
-	backup = etc/mkinitcpio.d/linux-git.preset
-	source = git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-encryption
+	backup = etc/mkinitcpio.d/linux-bcachefs.preset
+	source = git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-dev
 	source = config.x86_64
-	source = linux.preset
+	source = linux-bcachefs.preset
 	sha256sums = SKIP
-	sha256sums = 1db804bd8ded83e8cbf399e40c251ff3d19a48c423f6f531ff03e988df67ca35
-	sha256sums = 75d7d4b94156b3ba705a72ebbb91e84c8d519acf1faec852a74ade2accc7b0ea
+	sha256sums = 5da24b534ba44a0f6bbc807af41dfd4af2a23e6c599d6c19a583da5f8e878448
+	sha256sums = 63e059a46746b4b580c737c242c840029cb13218eb14038a7599116634d3c85c
 
-pkgname = linux
+pkgname = linux-bcachefs
 	pkgdesc = The Linux kernel and modules (with bcachefs support)
 	install = linux.install
 	depends = coreutils
@@ -29,13 +29,13 @@ pkgname = linux
 	depends = mkinitcpio>=0.7
 	optdepends = crda: to set the correct wireless channels of your country
 	provides = linux
-	backup = etc/mkinitcpio.d/linux.preset
+	backup = etc/mkinitcpio.d/linux-bcachefs.preset
 
-pkgname = linux-headers
+pkgname = linux-bcachefs-headers
 	pkgdesc = Header files and scripts for building modules for Linux kernel (with bcachefs support)
 	provides = linux-headers
 
-pkgname = linux-docs
+pkgname = linux-bcachefs-docs
 	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux kernel (with bcachefs support)
 	provides = linux-docs
 
