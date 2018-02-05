@@ -6,22 +6,21 @@
 # Contributor: NextHendrix <cjones12 at sheffield.ac.uk>
 
 pkgbase=linux-bcachefs
-_srcname=linux-bcache
-pkgver=4.8.r258261.g6bdfadd4c37f
-_basever=4.8
+_srcname=bcachefs
+pkgver=4.11rc2.r62790.g67109c13b64a
 pkgrel=1
 arch=('x86_64')
-url="https://evilpiepirate.org/git/linux-bcache.git/"
+url="https://bcachefs.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'libelf')
 options=('!strip')
-source=('git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-dev'
+source=('git+https://evilpiepirate.org/git/bcachefs.git'
         # the main kernel config files
         'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         "${pkgbase}.preset")
 sha256sums=('SKIP'
-            '5da24b534ba44a0f6bbc807af41dfd4af2a23e6c599d6c19a583da5f8e878448'
+            '143165300bbc2fa119d8d0a96d7f2155b2246802f404e66486b8db44ba081a03'
             '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729')
 
 _kernelname=${pkgbase#linux}
@@ -29,7 +28,7 @@ _kernelname=${pkgbase#linux}
 pkgver() {
   cd "${_srcname}"
 
-  git describe --long | sed -E 's/^origin/'${_basever}'/;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/'
+  git describe --long | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/'
 }
 
 prepare() {
@@ -53,10 +52,8 @@ prepare() {
   #make nconfig # new CLI menu for configuration
   #make xconfig # X-based configuration
   #make oldconfig # using old config from previous kernel version
+  make olddefconfig # old config from previous kernel, defaults for new options
   # ... or manually edit .config
-
-  # rewrite configuration
-  yes "" | make config >/dev/null
 }
 
 build() {
@@ -165,10 +162,6 @@ _package-headers() {
   cp arch/${KARCH}/Makefile "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/"
 
   cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel/"
-
-  # add docbook makefile
-  install -D -m644 Documentation/DocBook/Makefile \
-    "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
 
   # add dm headers
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/md"

@@ -1,7 +1,7 @@
 pkgbase = linux-bcachefs
-	pkgver = 4.8.r258261.g6bdfadd4c37f
+	pkgver = 4.11rc2.r62790.g67109c13b64a
 	pkgrel = 1
-	url = https://evilpiepirate.org/git/linux-bcache.git/
+	url = https://bcachefs.org/
 	arch = x86_64
 	license = GPL2
 	makedepends = xmlto
@@ -12,13 +12,12 @@ pkgbase = linux-bcachefs
 	makedepends = git
 	makedepends = libelf
 	options = !strip
-	backup = etc/mkinitcpio.d/linux-bcachefs.preset
-	source = git+http://evilpiepirate.org/git/linux-bcache.git#branch=bcache-dev
+	source = git+https://evilpiepirate.org/git/bcachefs.git
 	source = config.x86_64
 	source = linux-bcachefs.preset
 	sha256sums = SKIP
-	sha256sums = 5da24b534ba44a0f6bbc807af41dfd4af2a23e6c599d6c19a583da5f8e878448
-	sha256sums = 63e059a46746b4b580c737c242c840029cb13218eb14038a7599116634d3c85c
+	sha256sums = 143165300bbc2fa119d8d0a96d7f2155b2246802f404e66486b8db44ba081a03
+	sha256sums = 438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729
 
 pkgname = linux-bcachefs
 	pkgdesc = The Linux kernel and modules (with bcachefs support)
