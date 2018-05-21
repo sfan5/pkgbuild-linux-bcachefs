@@ -7,7 +7,7 @@
 
 pkgbase=linux-bcachefs
 _srcname=bcachefs
-pkgver=4.11rc2.r62790.g67109c13b64a
+pkgver=4.15.r15200.ge3ec46ffb87b
 pkgrel=1
 arch=('x86_64')
 url="https://bcachefs.org/"
@@ -20,7 +20,7 @@ source=('git+https://evilpiepirate.org/git/bcachefs.git'
         # standard config files for mkinitcpio ramdisk
         "${pkgbase}.preset")
 sha256sums=('SKIP'
-            '143165300bbc2fa119d8d0a96d7f2155b2246802f404e66486b8db44ba081a03'
+            '9d7a7497cd35e1ef0e275546b3c43fad632ec22d4bba202194f6f3c2838f0354'
             '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729')
 
 _kernelname=${pkgbase#linux}
@@ -42,6 +42,9 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  # fix build failure due to -Werror=restrict
+  sed -i '/INTERNAL ERROR/ s|.*|*buf = 0;|' tools/lib/str_error_r.c
 
   # get kernel version
   make prepare
@@ -176,11 +179,6 @@ _package-headers() {
   cp net/mac80211/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/net/mac80211/"
 
   # add dvb headers for external modules
-  # in reference to:
-  # http://bugs.archlinux.org/task/9912
-  mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-core"
-  cp drivers/media/dvb-core/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-core/"
-  # and...
   # http://bugs.archlinux.org/task/11194
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include/config/dvb/"
   cp include/config/dvb/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/include/config/dvb/"
