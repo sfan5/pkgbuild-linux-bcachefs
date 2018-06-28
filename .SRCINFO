@@ -1,5 +1,5 @@
 pkgbase = linux-bcachefs
-	pkgver = 4.11rc2.r62790.g67109c13b64a
+	pkgver = 4.15.r15242.g9b233320cdbe
 	pkgrel = 1
 	url = https://bcachefs.org/
 	arch = x86_64
@@ -16,7 +16,7 @@ pkgbase = linux-bcachefs
 	source = config.x86_64
 	source = linux-bcachefs.preset
 	sha256sums = SKIP
-	sha256sums = 143165300bbc2fa119d8d0a96d7f2155b2246802f404e66486b8db44ba081a03
+	sha256sums = 320e08a384b740a6c16720afca4bae8944305f5f2a92c1ff98812b29c3d9d833
 	sha256sums = 438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729
 
 pkgname = linux-bcachefs

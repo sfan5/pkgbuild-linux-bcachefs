@@ -7,7 +7,7 @@
 
 pkgbase=linux-bcachefs
 _srcname=bcachefs
-pkgver=4.15.r15200.ge3ec46ffb87b
+pkgver=4.15.r15242.g9b233320cdbe
 pkgrel=1
 arch=('x86_64')
 url="https://bcachefs.org/"
@@ -20,7 +20,7 @@ source=('git+https://evilpiepirate.org/git/bcachefs.git'
         # standard config files for mkinitcpio ramdisk
         "${pkgbase}.preset")
 sha256sums=('SKIP'
-            '9d7a7497cd35e1ef0e275546b3c43fad632ec22d4bba202194f6f3c2838f0354'
+            '320e08a384b740a6c16720afca4bae8944305f5f2a92c1ff98812b29c3d9d833'
             '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729')
 
 _kernelname=${pkgbase#linux}
