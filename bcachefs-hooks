@@ -1,34 +1,7 @@
 #!/usr/bin/ash
 
 run_hook() {
-    #echo "running sleep before checking for unlock"
-    #sleep 5
-    #echo "test for getting root name"
-    #echo "root is:  $root"
-    #echo "checking for /dev/null"
-    #if [ ! -f /dev/null ]; then
-    #	echo "/dev/null does not exist" 
-    #	echo "creating /dev/null"
-    #	mknod /dev/null c 1 3
-    #	echo "checking if /dev/null creating succeeded"
-    #	if [ ! -f /dev/null ]; then
-    #		echo "creation of /dev/null failed"
-    #	else
-    #		echo "creation of /dev/null succeeded"
-    #	fi
-    #	else
-    #	echo "/dev/null exists"
-    #fi
-    #echo "checking if bcachefs binary exists"
-    #if [ ! hash bcachefs >/dev/null ]; then
-    #	echo "bcachefs binary does not exist"
-    #else 
-    #	echo "bcachefs binary exists"
-    #fi
-
-    #echo "ROOT is: $ROOT"
-    # check if disk needs unlocking
-    if bcachefs unlock -c $root >/dev/null 2>&1; then
+   if bcachefs unlock -c $root >/dev/null 2>&1; then
     	echo "Unlocking $root:"
     
     	while true; do
@@ -38,15 +11,6 @@ run_hook() {
 
     echo "running fsck.bcachefs on $root:"
     fsck.bcachefs $root
-
-    # the '-c' flag for bcachefs does not yet exist
-    # simply prompt for unlock since we know it's 
-    # an ecrypted drive. Change this when the '-c'
-    # is available for bcachefs
-    #echo "Unlocking $root:"
-    #while true; do
-    # 	bcachefs unlock $root && break
-    #done
 }
 
 # vim: set ft=sh ts=4 sw=4 et:
