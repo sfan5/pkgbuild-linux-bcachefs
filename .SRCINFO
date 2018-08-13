@@ -15,9 +15,13 @@ pkgbase = linux-bcachefs
 	source = git+https://evilpiepirate.org/git/bcachefs.git
 	source = config.x86_64
 	source = linux-bcachefs.preset
+	source = bcachefs-install
+	source = bcachefs-hooks
 	sha256sums = SKIP
 	sha256sums = 320e08a384b740a6c16720afca4bae8944305f5f2a92c1ff98812b29c3d9d833
 	sha256sums = 438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729
+	sha256sums = c5fa40d26374851e989b0b6277830048f604ede910c993fef20172d055db8cbe
+	sha256sums = 54197d403c946c229a14e1d624d4606dcb1ab5a928322d0625362a28387ca892
 
 pkgname = linux-bcachefs
 	pkgdesc = The Linux kernel and modules (with bcachefs support)

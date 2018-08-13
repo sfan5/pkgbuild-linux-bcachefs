@@ -18,10 +18,14 @@ source=('git+https://evilpiepirate.org/git/bcachefs.git'
         # the main kernel config files
         'config.x86_64'
         # standard config files for mkinitcpio ramdisk
-        "${pkgbase}.preset")
+        "${pkgbase}.preset"
+        "bcachefs-install"
+        "bcachefs-hooks")
 sha256sums=('SKIP'
             '320e08a384b740a6c16720afca4bae8944305f5f2a92c1ff98812b29c3d9d833'
-            '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729')
+            '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729'
+            'c5fa40d26374851e989b0b6277830048f604ede910c993fef20172d055db8cbe'
+            '54197d403c946c229a14e1d624d4606dcb1ab5a928322d0625362a28387ca892')
 
 _kernelname=${pkgbase#linux}
 
@@ -125,6 +129,22 @@ _package() {
 
   # add System.map
   install -D -m644 System.map "${pkgdir}/boot/System.map-${_kernver}"
+
+  # add /etc/initcpio/install/bcachefs
+  install -D -m644 bcachefs-install "${pkgdir}/etc/initcpio/install/bcachefs"
+
+  # add /etc/initcpio/hooks/bcachefs
+  install -D -m644 bcachefs-hooks "${pkgdir}/etc/initcpio/hooks/bcachefs"
+
+  # edit /etc/mkinitcpio.conf to include bcachefs hooks if it doesn't already
+  # and create a backup of original at /etc/mkinitcpio.conf.bak
+  if ! grep -rnw '/etc/mkinitcpio.conf' -e 'bcachefs' >/dev/null 2>&1; then
+    echo "creating /etc/mkinitcpio.conf.bak and adding bcachefs hook to /etc/mkinitcpio.conf"
+    sed -i.bak 's/keyboard/bcachefs &/g' /etc/mkinitcpio.conf
+  else
+    echo "/etc/mkinitcpio.conf already contains bcachefs hook"
+  fi
+
 }
 
 _package-headers() {
