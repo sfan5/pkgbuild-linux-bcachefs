@@ -136,15 +136,6 @@ _package() {
   # add /etc/initcpio/hooks/bcachefs
   install -D -m644 bcachefs-hooks "${pkgdir}/etc/initcpio/hooks/bcachefs"
 
-  # edit /etc/mkinitcpio.conf to include bcachefs hooks if it doesn't already
-  # and create a backup of original at /etc/mkinitcpio.conf.bak
-  if ! grep -rnw '/etc/mkinitcpio.conf' -e 'bcachefs' >/dev/null 2>&1; then
-    echo "creating /etc/mkinitcpio.conf.bak and adding bcachefs hook to /etc/mkinitcpio.conf"
-    sed -i.bak 's/keyboard/bcachefs &/g' /etc/mkinitcpio.conf
-  else
-    echo "/etc/mkinitcpio.conf already contains bcachefs hook"
-  fi
-
 }
 
 _package-headers() {
