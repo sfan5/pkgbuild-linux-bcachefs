@@ -7,7 +7,7 @@
 
 pkgbase=linux-bcachefs
 _srcname=bcachefs
-pkgver=4.15.r15242.g9b233320cdbe
+pkgver=4.15.r44211.gd9bf5460deb7
 pkgrel=1
 arch=('x86_64')
 url="https://bcachefs.org/"
@@ -18,10 +18,14 @@ source=('git+https://evilpiepirate.org/git/bcachefs.git'
         # the main kernel config files
         'config.x86_64'
         # standard config files for mkinitcpio ramdisk
-        "${pkgbase}.preset")
+        "${pkgbase}.preset"
+        "bcachefs-install"
+        "bcachefs-hooks")
 sha256sums=('SKIP'
             '320e08a384b740a6c16720afca4bae8944305f5f2a92c1ff98812b29c3d9d833'
-            '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729')
+            '438f8d252439949a995dadef0e26f6a178433b3c3dca78901ee9708212bda729'
+            'c5fa40d26374851e989b0b6277830048f604ede910c993fef20172d055db8cbe'
+            '7fd132485c829da6d48bc38c7c57e6296574e8e571f2dccb67196951f54c04ef')
 
 _kernelname=${pkgbase#linux}
 
@@ -125,6 +129,13 @@ _package() {
 
   # add System.map
   install -D -m644 System.map "${pkgdir}/boot/System.map-${_kernver}"
+
+  # add /etc/initcpio/install/bcachefs
+  install -D -m644 "${srcdir}/bcachefs-install" "${pkgdir}/etc/initcpio/install/bcachefs"
+
+  # add /etc/initcpio/hooks/bcachefs
+  install -D -m644 "${srcdir}/bcachefs-hooks" "${pkgdir}/etc/initcpio/hooks/bcachefs"
+
 }
 
 _package-headers() {
