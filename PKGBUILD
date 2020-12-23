@@ -2,10 +2,10 @@
 # Contributor: Boohbah <boohbah at gmail.com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
-pkgbase=linux-git
-pkgver=5.10rc2.r81.g4ef8451b3326
+pkgbase=linux-bcachefs
+pkgver=5.10.r426.g3fbeb6b9a0e7
 pkgrel=1
-pkgdesc='Linux (Git)'
+pkgdesc='Linux (with bcachefs support)'
 url="https://www.kernel.org"
 arch=(x86_64)
 license=(GPL2)
@@ -14,13 +14,13 @@ makedepends=(
   xmlto python-sphinx python-sphinx_rtd_theme graphviz imagemagick
 )
 options=('!strip')
-_srcname=linux
+_srcname=bcachefs
 source=(
-  'git+https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux'
+  'git+https://evilpiepirate.org/git/bcachefs.git'
   config         # the main kernel config file
 )
 sha256sums=('SKIP'
-            'a01c8ef3463c239f868fa679006bc591b1a088274dde8c9c162440dd0547ccad')
+            '2420dd3db1a7494e9f0d4164738115243d0f6f723c2ab49f879e86b185e5438a')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase

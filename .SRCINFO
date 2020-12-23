@@ -1,6 +1,6 @@
-pkgbase = linux-git
-	pkgdesc = Linux (Git)
-	pkgver = 5.10rc2.r81.g4ef8451b3326
+pkgbase = linux-bcachefs
+	pkgdesc = Linux (with bcachefs support)
+	pkgver = 5.10.r426.g3fbeb6b9a0e7
 	pkgrel = 1
 	url = https://www.kernel.org
 	arch = x86_64
@@ -16,13 +16,13 @@ pkgbase = linux-git
 	makedepends = graphviz
 	makedepends = imagemagick
 	options = !strip
-	source = git+https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux
+	source = git+https://evilpiepirate.org/git/bcachefs.git
 	source = config
 	sha256sums = SKIP
-	sha256sums = a01c8ef3463c239f868fa679006bc591b1a088274dde8c9c162440dd0547ccad
+	sha256sums = 2420dd3db1a7494e9f0d4164738115243d0f6f723c2ab49f879e86b185e5438a
 
-pkgname = linux-git
-	pkgdesc = The Linux (Git) kernel and modules
+pkgname = linux-bcachefs
+	pkgdesc = The Linux (with bcachefs support) kernel and modules
 	depends = coreutils
 	depends = kmod
 	depends = initramfs
@@ -31,9 +31,9 @@ pkgname = linux-git
 	provides = WIREGUARD-MODULE
 	replaces = wireguard-arch
 
-pkgname = linux-git-headers
-	pkgdesc = Headers and scripts for building modules for the Linux (Git) kernel
+pkgname = linux-bcachefs-headers
+	pkgdesc = Headers and scripts for building modules for the Linux (with bcachefs support) kernel
 
-pkgname = linux-git-docs
-	pkgdesc = Documentation for the Linux (Git) kernel
+pkgname = linux-bcachefs-docs
+	pkgdesc = Documentation for the Linux (with bcachefs support) kernel
 
