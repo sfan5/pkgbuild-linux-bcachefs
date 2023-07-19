@@ -5,21 +5,21 @@
 # Refer to config file to get the exact versions it's based on. Any changes to the config
 # will be on config.extra file.
 
-pkgbase=linux-git
-pkgver=v6.4.rc3.r291.4e893b5aa4ac
+pkgbase=linux-bcachefs
+pkgver=v6.4.r2675.20e2f760dacb
 pkgrel=1
-pkgdesc="Linus Torvalds' Mainline Linux"
+pkgdesc='Linux (with bcachefs support)'
 url="https://www.kernel.org"
 arch=(x86_64)
 license=(GPL2)
-_userconfig="/etc/${pkgbase}/config"
-_userremote="/etc/${pkgbase}/remote"
-_userpatches="/etc/${pkgbase}/patches/patches"
-backup=(
-"${_userconfig##/}"
-"${_userremote##/}"
-"${_userpatches##/}"
-)
+#_userconfig="/etc/${pkgbase}/config"
+#_userremote="/etc/${pkgbase}/remote"
+#_userpatches="/etc/${pkgbase}/patches/patches"
+#backup=(
+#"${_userconfig##/}"
+#"${_userremote##/}"
+#"${_userpatches##/}"
+#)
 makedepends=(
   bc
   cpio
@@ -32,9 +32,9 @@ makedepends=(
   xz
 )
 options=('!strip')
-_srcname=linux-torvalds
+_srcname=bcachefs
 source=(
-  "$_srcname::git+https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux"
+  'git+https://evilpiepirate.org/git/bcachefs.git'
   config         # the main kernel config file
   config.extra   # additional configs
   config.user    # user custom config
@@ -48,7 +48,7 @@ validpgpkeys=(
 b2sums=(
   'SKIP'                                                                                                                              # linux git source
   'e4998c4a144843cb6072ffc706baae3cf7530fc245fbf9cc4264aad119304944bdbb5aed9e5cfcefc87ab3e694067759e400dda669d5d734c439db288ad467c1'  # config
-  '249bec61fed688345a0f41245af9e8e189af3149e66a3c0dcc8e833151428232a701a35ed760ef93ceb5f25d9378c44f903f380a7051a65fb9a203c6fb51ebcd'  # config.extra
+  'c5e3e88071dec55b16b074aab5367724dbf378a2a0740a3e06a718ff430a3121ea13509430bba28db6d40477121eb3548a50fd9fb4f9f5551c2c19af3f61973d'  # config.extra
   'SKIP'                                                                                                                              # config.user
   'SKIP'                                                                                                                              # remote
   'a483bfcc2f7926def88842a1b5da5170ed50e941d82e5389521c71e82015f1b1d8503efda1517f85105a5ed218bd4ca282f4381b16926cdc774c85b8b5a11615'  # patches
@@ -57,6 +57,8 @@ b2sums=(
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
+
+IGNORE_USER_CUSTOM=1
 
 _make() {
   test -s version
@@ -169,7 +171,7 @@ _package() {
     virtualbox-guest-modules-arch
     wireguard-arch
   )
-  install="${pkgbase}.install"
+  #install="${pkgbase}.install"
 
   cd $_srcname
   local modulesdir="$pkgdir/usr/lib/modules/$(<version)"
@@ -190,9 +192,9 @@ _package() {
   rm "$modulesdir"/{source,build}
 
   # install config files
-  install -Dm644 $srcdir/config.user "${pkgdir}${_userconfig}"
-  install -Dm644 $srcdir/remote "${pkgdir}${_userremote}"
-  install -Dm644 $srcdir/patches "${pkgdir}${_userpatches}"
+  #install -Dm644 $srcdir/config.user "${pkgdir}${_userconfig}"
+  #install -Dm644 $srcdir/remote "${pkgdir}${_userremote}"
+  #install -Dm644 $srcdir/patches "${pkgdir}${_userpatches}"
 }
 
 _package-headers() {
