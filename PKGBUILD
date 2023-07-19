@@ -48,7 +48,7 @@ validpgpkeys=(
 b2sums=(
   'SKIP'                                                                                                                              # linux git source
   'e4998c4a144843cb6072ffc706baae3cf7530fc245fbf9cc4264aad119304944bdbb5aed9e5cfcefc87ab3e694067759e400dda669d5d734c439db288ad467c1'  # config
-  'c5e3e88071dec55b16b074aab5367724dbf378a2a0740a3e06a718ff430a3121ea13509430bba28db6d40477121eb3548a50fd9fb4f9f5551c2c19af3f61973d'  # config.extra
+  '1582a0b48fc9714595481cf2a4a532289ade731d5d16467371edd8d29b5c884e9c1a1053103f9fa3237e116b12e513bb14fd52bc74af1906287977c0e4b13b24'  # config.extra
   'SKIP'                                                                                                                              # config.user
   'SKIP'                                                                                                                              # remote
   'a483bfcc2f7926def88842a1b5da5170ed50e941d82e5389521c71e82015f1b1d8503efda1517f85105a5ed218bd4ca282f4381b16926cdc774c85b8b5a11615'  # patches
